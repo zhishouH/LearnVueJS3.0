@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件父传子</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          num: 1234
+        }
+      },
+      template: `
+        <div>
+          <demo :content="num"/>
+        </div>
+      `
+    })
+    // 全局组件
+    // 类型校验
+    // type: String Number Array Function Boolean Symbol
+    // required 必填
+    // default 默认值
+    // validator 限制
+
+    // 属性传的时候，用 ‘-’ ，接受用驼峰
+
+    // 单项数据流概念： 子组件可以使用父组件传递过来的数据，但不能修改
+
+    app.component('demo', {
+      // props: ["content"],
+      props: {
+        content: {
+          type: Number,
+          validator: function (value) {
+            return value < 1000
+          }
+        }
+      },
+      template: `
+        <div> {{typeof content}} </div>
+      `
+    })
+
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>
