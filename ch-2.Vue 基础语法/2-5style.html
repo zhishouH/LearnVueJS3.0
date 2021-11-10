@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>样式</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    div {
+      margin: 10px 0px;
+    }
+
+    .size {
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .color {
+      color: teal;
+      background-color: tomato;
+    }
+
+    .border {
+      border: 10px solid pink;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          classString: 'size color',
+          classObject: {
+            size: true,
+            color: true
+          },
+          classArray: ['size', 'color', { border: true }],
+          styleString: 'size:font-size: 40px; font-weight: bold;',
+          styleObject: {
+            fontSize: '40px',
+            fontWeight: 'bold',
+            color: 'teal',
+            background: 'tomato',
+            border: '10px solid pink'
+          },
+        }
+      },
+      // template: `
+      //   <div class="size">
+      //     hello-world  
+      //   </div>
+      // `
+
+      // template: `
+      //   <div :class="classString">
+      //     hello-world  
+      //   </div>
+      // `
+
+      // template: `
+      //   <div :class="classObject">
+      //     hello-world  
+      //   </div>
+      // `
+
+      // template: `
+      //   <div :class="classArray">
+      //     hello-world  
+      //     </div>
+      //     <demo :class="classArray"></demo>
+      // `
+
+      // template: `
+      //   <div :style="styleString">
+      //     hello-world  
+      //     </div>
+      // `
+
+      template: `
+        <div :style="styleObject">
+          hello-world  
+          </div>
+      `
+    })
+
+    app.component("demo", {
+      template: `
+        <div :class="$attrs.class">one</div>
+        <div :class="$attrs.class">two</div>
+      `
+    })
+
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>

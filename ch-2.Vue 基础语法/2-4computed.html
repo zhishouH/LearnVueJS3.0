@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>data - methods - computed - watch</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script>
+    // computed 和 methods 都能实现的功能优先用computed， 因为有缓存
+    // computed 和 watch 都能实现的功能优先用computed， 因为更简洁
+    const app = Vue.createApp({
+      data() {
+        return {
+          message: 'hello world',
+          count: 1,
+          price: 5
+        }
+      },
+      watch: {
+        // price 发生变化时，函数会执行
+        price(newData, oldData) {
+          console.log(newData, oldData)
+          setTimeout(() => {
+            console.log("price change")
+          }, 2000)
+        }
+      },
+      computed: {
+        // 当计算属性依赖的内容发生变更时，才会被重新计算
+        total() {
+          return this.count * this.price
+        }
+      },
+      methods: {
+        setUpperCase(string) {
+          return string.toUpperCase()
+        },
+        // 只要页面重新渲染，才会重新计算
+        setTotal() {
+          return this.count * this.price
+        }
+      },
+
+      // 1、
+      // template: `
+      //   <div>
+      //     {{setUpperCase(message)}}
+      //   </div>
+      // `
+
+      // 2、
+      // template: `
+      //   <div>
+      //     {{total}}
+      //   </div>
+      // `
+
+      // 3、
+      template: `
+        <div>
+          {{setTotal()}}
+        </div>
+      `
+    })
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>

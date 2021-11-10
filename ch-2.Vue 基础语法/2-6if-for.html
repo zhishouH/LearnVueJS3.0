@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>条件与列表渲染</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          arr: ['hello', 'world', 'dell', 'lee'],
+          obj: {
+            name: "Hn",
+            sex: "boy",
+            age: 19,
+            hobby: "JavaScript"
+          }
+        }
+      },
+      methods: {
+        handleBtnClick() {
+          // 数组的变更方法 push pop shift unshift reverse splice sort
+          // this.arr.push("Hn")
+          // this.arr.pop()
+          // this.arr.shift()
+          // this.arr.unshift("Hn")
+          // this.arr.reverse()
+
+          // 对象
+          // this.obj.height = 185
+        }
+      },
+      template: `
+        <div>
+          <ul>
+            <template v-for="(item,index) in arr" :key="index">
+              <li v-if="item !== 'hello'">
+                {{item}}--{{index}}
+              </li>
+            </template>  
+          </ul>
+          <button @click="handleBtnClick()">点击</button>
+        </div>
+      `
+
+      // template: `
+      //   <div>
+      //     <ul>
+      //       <li v-for="(value,key,index) in obj" :key="index">
+      //         {{value}}--{{key}}
+      //       </li>  
+      //     </ul>
+      //     <button @click="handleBtnClick()">点击</button>
+      //   </div>
+      // `
+    })
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>
