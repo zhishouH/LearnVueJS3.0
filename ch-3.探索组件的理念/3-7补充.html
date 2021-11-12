@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v-once ref provide inject</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    // v-once 让某个元素标签只渲染一次
+    // ref 实际上是获取Dom节点 / 组件的一个方法
+    // provide / inject 多级父子组件传递
+    const app = Vue.createApp({
+      // data() {
+      //   return {
+      //     count: 1
+      //   }
+      // },
+      // mounted() {
+      //   console.log(this.$refs.item.sayHello())
+      // },
+      // template: `
+      //   <div>
+      //     <div @click="count += 1" v-once> {{count}}</div>
+      //     <item ref="item"/>
+      //   </div>
+      // `
+      data() {
+        return {
+          count: 1
+        }
+      },
+      provide: {
+        count: 1
+      },
+      template: `
+        <div>
+          <count-item />
+        </div>
+      `
+    })
+
+    // app.component("item", {
+    //   methods: {
+    //     sayHello() {
+    //       alert("hello")
+    //     }
+    //   },
+    //   template: `
+    //     <div>hello</div>
+    //   `
+    // })
+
+    app.component("count-item", {
+      template: `
+        <count-item-child />
+      `
+    })
+    app.component("count-item-child", {
+      inject: ["count"],
+      template: `
+        <div>
+          {{count}}  
+        </div>
+      `
+    })
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>
