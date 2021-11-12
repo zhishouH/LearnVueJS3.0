@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>transition标签</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    /* 入场 */
+    /* .v-enter-from {
+      opacity: 0;
+    }
+
+    .v-enter-active {
+      transition: opacity 3s ease;
+    }
+
+    .v-enter-to {
+      opacity: 1;
+    } */
+
+    /* 出场 */
+    /* .v-leave-from {
+      opacity: 1;
+    }
+
+    .v-leave-active {
+      transition: opacity 3s ease;
+    }
+
+    .v-leave-to {
+      opacity: 0;
+    } */
+
+    @keyframes show {
+      from {
+        transform: translateX(-200px);
+      }
+
+      to {
+        transform: translateX(0px);
+      }
+    }
+
+    @keyframes hidden {
+      from {
+        transform: translateX(0px);
+      }
+
+      to {
+        transform: translateX(-200px);
+      }
+    }
+
+    .hello-enter-active {
+      animation: show 2s ease;
+    }
+
+    .hello-leave-active {
+      animation: hidden 2s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          isShow: false
+        }
+      },
+      methods: {
+        handleClick() {
+          this.isShow = !this.isShow
+        }
+      },
+      // 单元素 单组件的入场出场动画
+      template: `
+        <div>
+          <transition name="hello">
+          <div v-if="isShow">HELLO-WORLD</div>  
+          </transition>
+          <button @click="handleClick">点击</button>
+        </div>
+      `
+    })
+
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS中的过渡与动画</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    /* 动画 */
+    /* @keyframes leftToRight {
+      0% {
+        transform: translateX(-100px);
+      }
+
+      50% {
+        transform: translateX(-50px);
+      }
+
+      0% {
+        transform: translateX(0px);
+      }
+
+    }
+
+    .animation {
+      animation: leftToRight 3s;
+    } */
+
+    /* 过渡 */
+    .transition {
+      transition: background-color 1s linear;
+    }
+
+    .teal {
+      background-color: teal;
+    }
+
+    .tomato {
+      background-color: tomato;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script>
+    const app = Vue.createApp({
+      // 动画
+      // data() {
+      //   return {
+      //     animate: {
+      //       animation: false
+      //     }
+      //   }
+      // },
+      // methods: {
+      //   handleClick() {
+      //     this.animate.animation = !this.animate.animation
+      //   }
+      // },
+      // template: `
+      //   <div :class="animate">hello-world</div>
+      //   <button @click="handleClick">点击</button>
+      // `
+
+      // 过渡
+      // data() {
+      //   return {
+      //     animate: {
+      //       transition: true,
+      //       teal: true,
+      //       tomato: false
+      //     }
+      //   }
+      // },
+      // methods: {
+      //   handleClick() {
+      //     this.animate.teal = !this.animate.teal
+      //     this.animate.tomato = !this.animate.tomato
+      //   }
+      // },
+      // template: `
+      //   <div>
+      //     <div :class="animate">huangzhishou</div> 
+      //     <button @click="handleClick">点击</button>
+      //   </div>
+      // `
+
+      // style 过渡
+      data() {
+        return {
+          styleObj: {
+            background: 'teal'
+          }
+        }
+      },
+      methods: {
+        handleClick() {
+          if (this.styleObj.background === "teal") {
+            this.styleObj.background = "tomato"
+          } else {
+            this.styleObj.background = "teal"
+          }
+        }
+      },
+      template: `
+        <div>
+          <div class="transition" :style="styleObj">huangzhishou</div> 
+          <button @click="handleClick">点击</button>
+        </div>
+      `
+    })
+
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>
