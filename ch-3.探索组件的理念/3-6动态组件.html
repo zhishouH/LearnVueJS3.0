@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动态组件 与 异步组件</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    // 动态组件：根据数据的变化，结合component这个标签，随时动态切换组件的实现
+    // 异步组件： 异步执行某些组件的逻辑
+    const app = Vue.createApp({
+      // 动态组件
+      // data() {
+      //   return {
+      //     currentItem: "test-one"
+      //   }
+      // },
+      // methods: {
+      //   handleClick() {
+      //     if (this.currentItem === "test-one") {
+      //       this.currentItem = "test-two"
+      //     } else {
+      //       this.currentItem = "test-one"
+      //     }
+      //   }
+      // },
+      // template: `
+      //   <div>
+      //     <keep-alive>
+      //     <component :is="currentItem"/>
+      //     </keep-alive>
+      //     <button @click="handleClick">切换</button>
+      //   </div>
+      // `
+
+      // 异步组件
+      template: `
+        <div>
+          <item />
+          <async-item />
+        </div>
+      `
+    })
+
+    // 动态组件
+    // app.component("test-one", {
+    //   template: `
+    //   <div>
+    //     <input />
+    //   </div>
+    //   `
+    // })
+
+    // app.component("test-two", {
+    //   template: `
+    //     <div>
+    //       hello-world  
+    //     </div>
+    //   `
+    // })
+
+    // 异步组件
+    app.component("item", {
+      template: `
+        <div>item</div>
+      `
+    })
+
+    app.component("async-item", Vue.defineAsyncComponent(() => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({
+            template: `
+              <div>
+                  这是一个异步组件
+              </div>
+            `
+          })
+        }, 3000)
+      })
+    }))
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>

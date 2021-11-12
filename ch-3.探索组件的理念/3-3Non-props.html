@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Non-props</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app">
+  </div>
+  <script>
+    // Noe-props 子组件不接收父组件传递的参数时的处理方式
+    const app = Vue.createApp({
+      template: `
+        <div>
+          <counter msg="hello" msg1="world" />
+        </div>
+      `
+    })
+
+    // app.component("counter", {
+    //   inheritAttrs: false, // 不继承父组件传递的参数
+    //   template: `
+    //     <div>
+    //       Counter
+    //     </div>
+    //   `
+    // })
+    // 渲染之后： <div msg="hello">Counter</div>
+
+    app.component("counter", {
+      mounted() {
+        console.log(this.$attrs)
+      },
+      template: `
+        <div :msg="$attrs.msg">Counter</div>  
+        <div v-bind="$attrs">Counter</div>
+        <div :msg1="$attrs.msg1">Counter</div>
+      `
+    })
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件子传父</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          count: 1
+        }
+      },
+      methods: {
+        handleAdd(count) {
+          this.count = count
+        }
+      },
+      template: `
+        <counter :count="count" @add="handleAdd"></counter>
+      `
+    })
+
+    app.component("counter", {
+      props: ["count"],
+      emits: ["add"],
+      methods: {
+        handleClick() {
+          this.$emit('add', this.count + 1)
+        }
+      },
+      template: `
+        <div @click="handleClick">{{count}}</div>
+      `
+    })
+
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>

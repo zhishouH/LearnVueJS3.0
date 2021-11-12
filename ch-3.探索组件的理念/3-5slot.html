@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>slot 插槽</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    // slot 插槽
+    // 父组件里调用的数据属性，使用的是父组件的数据
+    // 子组件里调用的数据属性，使用的是子组件的数据
+
+    // 具名插槽
+
+    // 作用域插槽
+
+    const app = Vue.createApp({
+      // 普通插槽
+      // template: `
+      //   <div>
+      //     <slot-demo>
+      //       <div>提交</div>
+      //     </slot-demo>
+      //     <slot-demo>
+      //       <button>提交</button>
+      //     </slot-demo>
+      //   </div>
+      // `
+
+      // 具名插槽
+      // template: `
+      //   <div>
+      //       <slot-demo>
+      //         <template v-slot:header>
+      //           <div>header</div>  
+      //         </template>
+      //         <template #footer>
+      //           <div>footer</div> 
+      //         </template>
+      //       </slot-demo>
+      //   </div>
+      // `
+
+      // 作用域插槽
+      // slotProps -> 解构出item
+      // v-slot="{item} === v-slot="slotProps"
+      template: `
+        <slot-demo v-slot="{item}">
+          <div>
+            {{item}}
+          </div>  
+        </slot-demo>
+      `
+
+    })
+
+    app.component("slot-demo", {
+      // methods: {
+      //   handleClick() {
+      //     alert("123")
+      //   }
+      // },
+
+      // 普通插槽
+      // template: `
+      //   <div>
+      //     <input />
+      //     <div @click="handleClick">
+      //       <slot></slot>
+      //     </div>
+      //   </div>
+      // `
+
+      // 具名插槽
+      // template: `
+      //   <div>
+      //     <slot name="header"></slot>  
+      //     <div>main</div>
+      //     <slot name="footer"></slot>  
+      //   </div>
+      // `
+
+      // 作用域插槽
+      data() {
+        return {
+          list: [1, 2, 3]
+        }
+      },
+      template: `
+        <div>
+          <slot v-for="item in list" :item="item"></slot>  
+        </div>
+      `
+    })
+
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>
