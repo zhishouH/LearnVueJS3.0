@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mixin语法</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    // mixin 混入
+    // 组件 data.methods 优先级高于 mixin data,methods优先级
+    // 生命周期函数，先执行mixin的，再执行组件的
+
+    // 局部mixin
+    // const myMixin = {
+    //   data() {
+    //     return {
+    //       number: 22,
+    //       count: 36
+    //     }
+    //   },
+    //   methods: {
+    //     handleClick() {
+    //       alert("mixin handleClick")
+    //     }
+    //   },
+    //   created() {
+    //     console.log("mixin created")
+    //   }
+    // }
+
+    const app = Vue.createApp({
+      data() {
+        return {
+          number: 19
+        }
+      },
+      // mixins: [myMixin],
+      methods: {
+        handleClick() {
+          alert("handleClick")
+        }
+      },
+      created() {
+        console.log("created")
+      },
+      template: `
+        <div>
+          <div>{{number}}</div>
+          <child />
+          <button @click="handleClick">点击</button>
+        </div>
+      `
+    })
+    app.component("child", {
+      template: `
+        <div>
+          child -- {{count}}
+        </div>
+      `
+    })
+
+    // 全局mixin
+    app.mixin({
+      data() {
+        return {
+          number: 22,
+          count: 36
+        }
+      },
+      methods: {
+        handleClick() {
+          alert("mixin handleClick")
+        }
+      },
+      created() {
+        console.log("mixin created")
+      }
+    })
+
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>

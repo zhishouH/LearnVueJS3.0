@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>teltport 传送门</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .area {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      background-color: teal;
+    }
+
+    .mask {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: tomato;
+      opacity: 0.3;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          show: false
+        }
+      },
+      methods: {
+        handleClick() {
+          this.show = !this.show
+        }
+      },
+      template: `
+        <div class="area">
+          <button @click="handleClick">点击</button>
+          <teleport to="body">
+            <div class="mask" v-show="show">hello</div>
+          </teleport>
+        </div>
+      `
+    })
+
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>

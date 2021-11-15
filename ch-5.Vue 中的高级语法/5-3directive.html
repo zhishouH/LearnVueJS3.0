@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自定义属性 - directive</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    .header {
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    // const directives = {
+    //   focus: {
+    //     mounted(el) {
+    //       el.focus()
+    //     }
+    //   }
+    // }
+    const app = Vue.createApp({
+      // directives: directives,
+      data() {
+        return {
+          top: 200
+        }
+      },
+      template: `
+        <div>
+          <div v-pos:right=top class="header">
+            <input v-focus />
+          </div>
+        </div>
+      `
+    })
+    // 全局 自定义属性
+    app.directive('focus', {
+      mounted(el) {
+        el.focus()
+      }
+    })
+
+    app.directive('pos', (el, binding) => {
+      // el.style.top = (binding.value + "px")
+      el.style[binding.arg] = (binding.value + "px")
+    })
+    // 上下两个写法等价
+    // app.directive('pos', {
+    //   mounted(el, binding) {
+    //     el.style.top = (binding.value + "px")
+    //   },
+    //   updated(el, binding) {
+    //     el.style.top = (binding.value + "px")
+    //   }
+    // })
+
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>
