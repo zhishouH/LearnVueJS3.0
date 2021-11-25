@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ref - reactive</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    // ref reactive 响应式引用
+    // 原理，通过 proxy对数据进行封装，当数据变化时，触发模板的内容更新
+    // ref 处理基础类型的数据
+    // reactive 处理非基础类型的数据 -- 对象、数组
+    const app = Vue.createApp({
+      template: `
+        <div>
+          {{name}} 
+        </div>
+      `,
+      setup(props, context) {
+        // ref
+        // const { ref } = Vue
+        // let name = ref("Hn")
+        // setTimeout(() => {
+        //   name.value = "zhishouH"
+        // }, 2000)
+        // return { name }
+
+        // reactive
+        // const { reactive } = Vue
+        // let nameObj = reactive({ name: 'Hn' })
+        // setTimeout(() => {
+        //   nameObj.name = "zhishouH"
+        // }, 2000)
+        // return { nameObj }
+
+        // const { reactive } = Vue
+        // let nameObj = reactive([123])
+        // setTimeout(() => {
+        //   nameObj[0] = 456
+        // }, 2000)
+        // return { nameObj }
+
+        // 只读readonly
+        //   const { reactive, readonly } = Vue
+        //   const nameObj = reactive([123])
+        //   const copynameObj = readonly(nameObj)
+        //   setTimeout(() => {
+        //     nameObj[0] = 456
+        //     copynameObj[0] = 456
+        //   }, 2000)
+        //   return { nameObj, copynameObj }
+        // }
+
+        // toRefs
+        const { reactive, toRefs } = Vue
+        const nameObj = reactive({ name: 'Hn' })
+        setTimeout(() => {
+          nameObj.name = 'zhishouH'
+        }, 2000)
+        // return { nameObj }
+        const { name } = toRefs(nameObj)
+        return { name }
+      }
+    })
+    const vm = app.mount("#app")
+
+  </script>
+</body>
+
+</html>

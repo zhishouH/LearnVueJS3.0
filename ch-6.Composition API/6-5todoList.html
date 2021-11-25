@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>todoList</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    const app = Vue.createApp({
+
+      setup(props, context) {
+        const { ref, reactive } = Vue
+        const inputValue = ref('')
+        const handleInputValueChange = (e) => {
+          inputValue.value = e.target.value
+        }
+        const list = reactive([])
+        const handleAdd = () => {
+          list.push(inputValue.value)
+          inputValue.value = ''
+        }
+        return {
+          inputValue, handleInputValueChange,
+          list, handleAdd
+        }
+      },
+      mounted() {
+        // console.log(this.inputValue)
+      },
+      template: `
+        <div>
+          <input :value="inputValue" @input="handleInputValueChange"/>
+          <button @click="handleAdd">提交</button>
+          <ul>
+            <li v-for="(item,index) in list" :key="index">{{item}}</li>
+          </ul>
+        </div>
+      `
+
+    })
+    const vm = app.mount("#app")
+  </script>
+</body>
+
+</html>
